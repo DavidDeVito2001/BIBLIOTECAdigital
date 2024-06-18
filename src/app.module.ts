@@ -8,6 +8,8 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProfilesModule } from './profiles/profiles.module';
+import { UsersEntity } from 'users/entities/users.entity';
+import { ProfileEntity } from 'profiles/entities/profiles.entity';
 
 
 @Module({
@@ -27,6 +29,7 @@ import { ProfilesModule } from './profiles/profiles.module';
         username: configService.get('BIBLIOTECA_USERNAME'), //Obtiene el username para la bd
         password: configService.get('BIBLIOTECA_PASSWORD'), //obtiene la contraseña
         database: configService.get('BIBLIOTECA_DATABASE'), //Obtiene el nombre de la bd
+        entities:[UsersEntity, ProfileEntity]
       }),
       inject:[ConfigService], 
     }),

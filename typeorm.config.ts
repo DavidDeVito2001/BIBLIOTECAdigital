@@ -5,6 +5,7 @@
  */
 
 import {config} from 'dotenv';
+import { ProfileEntity } from 'profiles/entities/profiles.entity';
 import { DataSource } from 'typeorm';
 import { UsersEntity } from 'users/entities/users.entity';
 
@@ -26,9 +27,10 @@ export default new DataSource({
     database: process.env.BIBLIOTECA_DATABASE, // Se obtiene el nombre la bd 
 
     // Especifica las entidades que TypeORM debe reconocer para esta conexión (usando archivos .ts y .js)
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    entities: [UsersEntity, ProfileEntity],
     // Especifica en que carpetas se guardaran las migraciones
     migrations:['src/database/migrations/*{.ts,.js}'],
     // Se configura si la bd debe sincronizarse automaticamente con el esquema definido por las entities
     synchronize: false
 })
+
