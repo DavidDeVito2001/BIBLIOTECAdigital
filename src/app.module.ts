@@ -10,6 +10,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProfilesModule } from './profiles/profiles.module';
 import { UsersEntity } from 'users/entities/users.entity';
 import { ProfileEntity } from 'profiles/entities/profiles.entity';
+import { BooksModule } from './books/books.module';
+import { BooksEntity } from 'books/entities/books.entity';
+import { CopiesModule } from './copies/copies.module';
+import { CopiesEntity } from 'copies/entities/copies.entity';
 
 
 @Module({
@@ -29,12 +33,14 @@ import { ProfileEntity } from 'profiles/entities/profiles.entity';
         username: configService.get('BIBLIOTECA_USERNAME'), //Obtiene el username para la bd
         password: configService.get('BIBLIOTECA_PASSWORD'), //obtiene la contraseña
         database: configService.get('BIBLIOTECA_DATABASE'), //Obtiene el nombre de la bd
-        entities:[UsersEntity, ProfileEntity]
+        entities: [UsersEntity, ProfileEntity, BooksEntity, CopiesEntity]
       }),
       inject:[ConfigService], 
     }),
     UsersModule,
-    ProfilesModule
+    ProfilesModule,
+    BooksModule,
+    CopiesModule
   ],
   controllers: [],
   providers: [],

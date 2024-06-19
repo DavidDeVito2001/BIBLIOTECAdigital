@@ -20,8 +20,10 @@ export class ProfileEntity extends BaseEntity implements IProfile{
 
     @Column()
     adrress: string;
-
-    
+   
     @OneToOne(()=>UsersEntity, user=> user.profile)
-    user: UsersEntity; 
+    user: UsersEntity;
+    
+    @Column({ nullable: true })
+    userId: number;
 }

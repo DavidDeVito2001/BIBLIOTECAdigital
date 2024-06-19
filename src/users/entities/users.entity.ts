@@ -37,7 +37,7 @@ export class UsersEntity extends BaseEntity implements IUser{
     role: ROLES;
 
     //estableciendo un relación uno a uno con la tabla profile_users
-    @OneToOne(()=>ProfileEntity, {cascade:true, onDelete:'CASCADE',nullable: true})
+    @OneToOne(()=>ProfileEntity, { cascade: true, onDelete: 'CASCADE', nullable: true })
     @JoinColumn()
     profile:ProfileEntity | null;
 

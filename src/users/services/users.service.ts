@@ -32,7 +32,8 @@ export class UsersService {
       const userFound = await this.usersRepository.findOne({
         where:{
           id
-        }
+        },
+        relations:["profile"]
       });
 
       //Si el user no es encontrado: NOT_FOUND
@@ -66,15 +67,21 @@ export class UsersService {
     /**Función que se encarga de eliminar a un usuario según su id 
      * @param {number} id - Con el que se busca el user
     */
-    public async deleteUser(id:number){
-      const eliminado = await this.usersRepository.delete(id);
-      
-      if(eliminado.affected === 0){
-        throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND)
+    public async deleteUser(id: number): Promise<void> {
+      // Busca el usuario por ID
+      const userFound = await this.usersRepository.findOne({
+          where: { id },
+          relations: ['profile'],
+      });
+
+      // Si el usuario no se encuentra, lanza un error
+      if (!userFound) {
+          throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND);
       }
 
-      return eliminado;
-    }
+      // Elimina el usuario, el perfil asociado se elimina automáticamente por CASCADE
+      await this.usersRepository.remove(userFound);
+  }
 
     /**Función que se encarga de actualizar los usuarios según el id 
      * @param {number} id - Utilizado para encontrar el usuario
