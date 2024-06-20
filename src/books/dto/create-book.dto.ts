@@ -3,7 +3,7 @@
 export class CreateBookDTO{
     title: string;
     publication_year: number;
-    isbn: number;
+    isbn: string;
     author: string;
     category: string;
     image_url: string;

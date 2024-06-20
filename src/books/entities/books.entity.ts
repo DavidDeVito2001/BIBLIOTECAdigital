@@ -1,7 +1,7 @@
 import { IBook } from "../../interfaces/book.interface";
 import { BaseEntity } from "../../config/base.entity";
 import { Column, Entity, JoinColumn, OneToMany } from "typeorm";
-import { CopiesEntity } from "copies/entities/copies.entity";
+import { CopiesEntity } from "../../copies/entities/copies.entity";
 
 
 @Entity('books')
@@ -15,7 +15,7 @@ export class BooksEntity extends BaseEntity implements IBook{
     
 
     @Column()
-    isbn:number;
+    isbn:string;
     
     @Column()
     author:string;

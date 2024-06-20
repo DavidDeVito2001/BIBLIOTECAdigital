@@ -29,7 +29,11 @@ export class BooksService {
      */
     public async getBook(id:number):Promise<BooksEntity>{
         //Busca un book según el id
-        const bookFound = await this.booksRepository.findOne({where:{id}});
+        const bookFound = await this.booksRepository.findOne(
+            {where:{
+                id
+            }
+        });
         
         //Si el book no fue encontrado se retorna un error: NOT_FOUND
         if(!bookFound){
@@ -63,16 +67,22 @@ export class BooksService {
      * Función que se encarga de eliminar un book
      * @param {number} id - id de book que se busca eliminar
      */
-    public async deleteBook(id:number){
-        const eliminado = await this.booksRepository.delete(id);
-
-        if( eliminado.affected === 0){
-            throw new HttpException('Book no existe', HttpStatus.NOT_FOUND)
+    public async deleteBook(id: number): Promise<void> {
+        // Busca el book por ID
+        const bookFound = await this.booksRepository.findOne({
+            where: { id },
+            relations: ['copies'],
+        });
+  
+        // Si el book no se encuentra, lanza un error
+        if (!bookFound) {
+            throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND);
         }
-
-        return eliminado;
+  
+        // Elimina el usuario, el perfil asociado se elimina automáticamente por CASCADE
+        await this.booksRepository.remove(bookFound);
     }
-
+    
     /**
      * Función que se encarga de actualizar un book
      * @param {number} id - id del libro a encontrar

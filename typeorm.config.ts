@@ -30,12 +30,12 @@ export default new DataSource({
     database: process.env.BIBLIOTECA_DATABASE, // Se obtiene el nombre la bd 
 
     // Especifica las entidades que TypeORM debe reconocer para esta conexión (usando archivos .ts y .js)
-    entities: [UsersEntity, ProfileEntity,BooksEntity,CopiesEntity],
+    entities: [__dirname + '/**/*.entity{.ts,.js}'],
 
 
     // Especifica en que carpetas se guardaran las migraciones
     migrations:['src/database/migrations/*{.ts,.js}'],
     // Se configura si la bd debe sincronizarse automaticamente con el esquema definido por las entities
-    synchronize: true
+    synchronize: false
 })
 
