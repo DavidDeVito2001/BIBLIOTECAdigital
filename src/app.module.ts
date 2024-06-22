@@ -14,6 +14,8 @@ import { BooksModule } from './books/books.module';
 import { BooksEntity } from 'books/entities/books.entity';
 import { CopiesModule } from './copies/copies.module';
 import { CopiesEntity } from 'copies/entities/copies.entity';
+import { LoansModule } from './loans/loans.module';
+import { LoansEntity } from 'loans/entities/loans.entity';
 
 
 @Module({
@@ -33,14 +35,15 @@ import { CopiesEntity } from 'copies/entities/copies.entity';
         username: configService.get('BIBLIOTECA_USERNAME'), //Obtiene el username para la bd
         password: configService.get('BIBLIOTECA_PASSWORD'), //obtiene la contraseña
         database: configService.get('BIBLIOTECA_DATABASE'), //Obtiene el nombre de la bd
-        entities: [UsersEntity, ProfileEntity, BooksEntity, CopiesEntity]
+        entities: [UsersEntity, ProfileEntity, BooksEntity, CopiesEntity, LoansEntity]
       }),
       inject:[ConfigService], 
     }),
     UsersModule,
     ProfilesModule,
     BooksModule,
-    CopiesModule
+    CopiesModule,
+    LoansModule
   ],
   controllers: [],
   providers: [],

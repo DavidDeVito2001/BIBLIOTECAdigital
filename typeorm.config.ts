@@ -5,12 +5,10 @@
  */
 
 
-import { BooksEntity } from 'books/entities/books.entity';
-import { CopiesEntity } from 'copies/entities/copies.entity';
+
 import {config} from 'dotenv';
-import { ProfileEntity } from 'profiles/entities/profiles.entity';
 import { DataSource } from 'typeorm';
-import { UsersEntity } from 'users/entities/users.entity';
+
 
 //Obtiene las variables de entorno
 const env = process.env.NODE_ENV || 'development';
@@ -36,6 +34,6 @@ export default new DataSource({
     // Especifica en que carpetas se guardaran las migraciones
     migrations:['src/database/migrations/*{.ts,.js}'],
     // Se configura si la bd debe sincronizarse automaticamente con el esquema definido por las entities
-    synchronize: false
+    synchronize: true
 })
 

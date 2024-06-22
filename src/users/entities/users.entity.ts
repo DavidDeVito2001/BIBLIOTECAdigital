@@ -15,7 +15,8 @@ import { ProfileEntity } from "../../profiles/entities/profiles.entity";
 import { BaseEntity } from "../../config/base.entity";
 import { ROLES } from "../../constants/ROLES";
 import { IUser } from "../../interfaces/user.interfaces";
-import { Column, Entity, JoinColumn, OneToOne} from "typeorm";
+import { Column, Entity, JoinColumn,OneToMany, OneToOne} from "typeorm";
+import { LoansEntity } from "../../loans/entities/loans.entity";
 
 /**
  * Entidad que representa en la BD la tabla 'users'
@@ -43,5 +44,9 @@ export class UsersEntity extends BaseEntity implements IUser{
 
     @Column({ nullable: true })
     profileId: number | null;
+
+    //Estableciendo una relación uno a mmuchos con "loans"
+    @OneToMany(()=>LoansEntity, loans => loans.user)    
+    loans: LoansEntity[];
 }
 

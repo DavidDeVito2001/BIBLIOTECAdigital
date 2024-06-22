@@ -63,14 +63,24 @@ export class CopiesService {
      * @param {number} id - id de la copy 
      * */  
     public async deleteCopy(id:number){
-        //Se elimina la copy según el id
-        const copyDelete = await this.copiesRepository.delete(id)
-        //Si no se elimino la row affected es igual a 0, eso quiere decir que no se encontro o no existe
-        if(copyDelete.affected === 0){
-          throw new HttpException('Copy No Existe', HttpStatus.NOT_FOUND)
+        try {
+          //Se elimina la copy según el id
+          const copyDelete = await this.copiesRepository.delete(id)
+          //Si no se elimino la row affected es igual a 0, eso quiere decir que no se encontro o no existe
+          if(copyDelete.affected === 0){
+            throw new HttpException('Copy No Existe', HttpStatus.NOT_FOUND)
+          }
+          //Si se encontro se devuelve eliminada
+          return copyDelete;
+        } catch (error) {
+          // captamos el error y si el elemento no se puede eliminar por tener datos asociados se advierte
+          if(error.code==='ER_ROW_IS_REFERENCED_2'){
+            console.error('No se puede eliminar la copia. Primero tienes que eliminar los prestamos asociados')
+          }else{
+            console.error('Error al eliminar la copia:', error.message)
+          }
+          
         }
-        //Si se encontro se devuelve eliminada
-        return copyDelete;
       }
 
     /**Esta función sirve para actualizar la copy según el id

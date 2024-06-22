@@ -33,7 +33,7 @@ export class UsersService {
         where:{
           id
         },
-        relations:["profile"]
+        relations:['profile', 'loans']
       });
 
       //Si el user no es encontrado: NOT_FOUND
@@ -68,19 +68,29 @@ export class UsersService {
      * @param {number} id - Con el que se busca el user
     */
     public async deleteUser(id: number): Promise<void> {
-      // Busca el usuario por ID
+      try{
+        // Busca el usuario por ID
       const userFound = await this.usersRepository.findOne({
-          where: { id },
-          relations: ['profile'],
-      });
+        where: { id },
+        relations: ['profile'],
+    });
 
-      // Si el usuario no se encuentra, lanza un error
-      if (!userFound) {
-          throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND);
+    // Si el usuario no se encuentra, lanza un error
+    if (!userFound) {
+        throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    // Elimina el usuario, el perfil asociado se elimina automáticamente por CASCADE
+    await this.usersRepository.remove(userFound);
+      }catch (error) {
+        // captamos el error y si el elemento no se puede eliminar por tener datos asociados se advierte
+        if(error.code==='ER_ROW_IS_REFERENCED_2'){
+          console.error('No se puede eliminar el usuario porque tiene prestamos asociados!')
+        }else{
+          console.error('Error al eliminar la copia:', error.message)
+        }
+        
       }
-
-      // Elimina el usuario, el perfil asociado se elimina automáticamente por CASCADE
-      await this.usersRepository.remove(userFound);
   }
 
     /**Función que se encarga de actualizar los usuarios según el id 
@@ -89,6 +99,7 @@ export class UsersService {
      * @returns {Promise<UsersEntity>}
     */
     public async updateUser(id:number, user:UpdateUserDTO):Promise<UsersEntity>{
+      
       //Se busca el user según el id
       const userFound = await this.usersRepository.findOne({
         where:{

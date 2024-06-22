@@ -26,7 +26,7 @@ export class BooksEntity extends BaseEntity implements IBook{
     @Column()
     image_url: string;
 
-    @OneToMany(()=>CopiesEntity, copies => copies.book,{cascade:true, onDelete: 'CASCADE'})
+    @OneToMany(()=>CopiesEntity, copies => copies.book)
     @JoinColumn()
     copies: CopiesEntity[]
 }
