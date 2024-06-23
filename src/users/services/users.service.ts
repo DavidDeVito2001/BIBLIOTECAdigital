@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDTO } from 'users/dto/create-user.dto';
@@ -13,7 +14,8 @@ export class UsersService {
         //importamos nuestras entidad UsersEntity y los convertimos en un repositorio de TypeORM
         @InjectRepository( UsersEntity ) private usersRepository: Repository<UsersEntity>
     ){}
-
+    
+    //Funciones del CRUD
 
     /**Función que se encarga de obtener todos los usuarios
      * @return {UsersEntity[]}
@@ -48,7 +50,8 @@ export class UsersService {
     /**Función que se encarga de cargar el usuario a la base de datos
     * @param {CreateUserDTO} user*/
     public async registerUser(user:CreateUserDTO):Promise<UsersEntity>{
-
+        //Se hashea el password
+        user.password = await bcrypt.hash(user.password, 10);
         /**@Type {boolean} Si username se encuentra en la bd  */
         const userFound = await this.usersRepository.findOne({
             where: {
@@ -111,12 +114,32 @@ export class UsersService {
       if(!userFound){
         throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND)
       }
-
       //Se le asigna los datos del user al userFound
       const userUpdate = Object.assign(userFound, user);
+      //Por si actualiza el password hacemos que se hashee
+      userUpdate.password = await bcrypt.hash(user.password, 10);
       //Se retorna el user actualizado
       return await this.usersRepository.save(userUpdate);
     }
+
+    //Funciones para la autenticación
+
+    /**
+     * Función que se utiliza para traer los valos de las propiedades: email o username, y password, con ayuda del objeto clave valor
+     * @param {object} keyValue - Se manda un objeto con dos propiedades de clave - valor
+     * @returns {Promise<UsersEntity|undefined>}
+     */
+    public async findBy({key, value}:{key:string, value:any}):Promise<UsersEntity|undefined>{
+
+      const user: UsersEntity = await this.usersRepository
+      .createQueryBuilder('user') //Se inicia la construcción de una consulta para la UsersEntity(user)
+      .addSelect('user.password') 
+      .where({[key]:value})// Se utliza el la condición 'where', permite usar el valor de key como propiedad
+      .getOne();//Se ejecuta la consulta construida
+
+      return user; //Si esta todo bien se devuelve el user
+    }
+
 
 }
 

@@ -16,6 +16,7 @@ import { CopiesModule } from './copies/copies.module';
 import { CopiesEntity } from 'copies/entities/copies.entity';
 import { LoansModule } from './loans/loans.module';
 import { LoansEntity } from 'loans/entities/loans.entity';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -43,7 +44,8 @@ import { LoansEntity } from 'loans/entities/loans.entity';
     ProfilesModule,
     BooksModule,
     CopiesModule,
-    LoansModule
+    LoansModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],
