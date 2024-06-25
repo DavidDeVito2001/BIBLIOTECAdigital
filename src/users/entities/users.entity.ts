@@ -1,7 +1,7 @@
 /**
- * @fileoverview Este archivo define la entidad users que representa la tabla de users en la base de datos MySQL.
+ * @fileoverview Este archivo define la entidad UsersEntity que representa la tabla de users en la base de datos MySQL.
  *
- * La entidad users incluye las siguientes propiedades:
+ * La entidad UsersEntity incluye las siguientes propiedades:
  *  - id: identificador heredado de la clase BaseEntity.
  *  - createAt: fecha de creación heredada de la clase BaseEntity.
  *  - updateAt: fecha de creación heredada de la clase BaseEntity.
@@ -13,6 +13,7 @@
 
 import { ProfileEntity } from "../../profiles/entities/profiles.entity";
 import { BaseEntity } from "../../config/base.entity";
+import {Exclude } from 'class-transformer'
 import { ROLES } from "../../constants/ROLES";
 import { IUser } from "../../interfaces/user.interfaces";
 import { Column, Entity, JoinColumn,OneToMany, OneToOne} from "typeorm";
@@ -31,10 +32,11 @@ export class UsersEntity extends BaseEntity implements IUser{
     @Column()
     email: string;
 
+    @Exclude()//de esta forma escondemos la contraseña en las búsquedas de Bd, SI LA QUEREMOS VER LO DESACTIVAMOS
     @Column()
     password: string;
 
-    @Column({type:'enum', enum: ROLES})
+    @Column({type:'enum', enum: ROLES, default: ROLES.BASIC})
     role: ROLES;
 
     //estableciendo un relación uno a uno con la tabla profile_users

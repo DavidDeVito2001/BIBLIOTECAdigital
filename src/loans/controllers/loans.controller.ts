@@ -37,7 +37,7 @@ export class LoansController {
     createLoans(@Body()loan:CreateLoanDTO):Promise<LoansEntity>{
         return this.loansService.createLoans(loan);
     }
-    
+
     //Ruta para admins
     @AdminAccess()
     //Maneja la solicitud delete y se encarga de eliminar un loan según el id

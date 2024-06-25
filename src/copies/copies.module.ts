@@ -4,9 +4,10 @@ import { CopiesService } from './services/copies.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CopiesEntity } from './entities/copies.entity';
 import { BooksModule } from '/books/books.module';
+import { UsersModule } from 'users/users.module';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([CopiesEntity]),BooksModule],
+  imports:[TypeOrmModule.forFeature([CopiesEntity]),BooksModule, UsersModule],
   controllers: [CopiesController],
   providers: [CopiesService],
   exports:[CopiesService,  TypeOrmModule]
