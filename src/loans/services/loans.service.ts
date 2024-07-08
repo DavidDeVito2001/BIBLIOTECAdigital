@@ -34,7 +34,7 @@ export class LoansService {
         const loanFound = await this.loansRepository.findOne({where:{id}});
         //Si no se encuentra se retorna un error - NOT_FOUND
         if(!loanFound){
-            throw new HttpException('Loan No Existe', HttpStatus.NOT_FOUND);
+            throw new HttpException('Loan No Encontrado', HttpStatus.NOT_FOUND);
         }
         //Sino se devuelve el loan encontrado
         return loanFound;
@@ -54,13 +54,13 @@ export class LoansService {
         const userFound = await this.usersRepository.findOne({ where: { id: userId } });
         //Si no se encuentra lanzamos un error
         if (!userFound) {
-          throw new HttpException('User No Existe', HttpStatus.NOT_FOUND);
+          throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND);
         }
         //Buscamos la copy según el userId proporcionado
         const copyFound = await this.copiesRepository.findOne({ where: { id: copyId } });
         //Si no se encuentra lanzamos un error
         if (!copyFound) {
-          throw new HttpException('Copy No Existe', HttpStatus.NOT_FOUND);
+          throw new HttpException('Copy No Encontrada', HttpStatus.NOT_FOUND);
         }
         //Si no se encuentra disponible lanzamos un error
         if (!copyFound.available) {
@@ -92,7 +92,7 @@ export class LoansService {
 
       //Si el loan no existe se lanza un error - NOT_FOUND
       if(!foundLoan){
-        throw new HttpException('Loan No Existe', HttpStatus.NOT_FOUND)
+        throw new HttpException('Loan No Encontrado', HttpStatus.NOT_FOUND)
       }
       //Se busca la copy según el copyId del loan encontrado
       const copy = await this.copiesRepository.findOne({where:{id:foundLoan.copyId}})

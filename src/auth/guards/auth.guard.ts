@@ -1,11 +1,11 @@
 import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { PUBLIC_KEY } from 'constants/key-decorators';
+import { PUBLIC_KEY } from '../../constants/key-decorators';
 import { Request } from 'express';
-import { IUseToken } from 'interfaces/auth.interfaces';
+import { IUseToken } from '../../interfaces/auth.interfaces';
 import { Observable } from 'rxjs';
-import { UsersService } from 'users/services/users.service';
-import { useToken } from '/../utils/use.token';
+import { UsersService } from '../../users/services/users.service';
+import { useToken } from '../../../utils/use.token';
 
 
 

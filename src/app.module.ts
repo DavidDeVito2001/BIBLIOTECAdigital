@@ -8,14 +8,14 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProfilesModule } from './profiles/profiles.module';
-import { UsersEntity } from 'users/entities/users.entity';
-import { ProfileEntity } from 'profiles/entities/profiles.entity';
+import { UsersEntity } from './users/entities/users.entity';
+import { ProfileEntity } from './profiles/entities/profiles.entity';
 import { BooksModule } from './books/books.module';
-import { BooksEntity } from 'books/entities/books.entity';
+import { BooksEntity } from './books/entities/books.entity';
 import { CopiesModule } from './copies/copies.module';
-import { CopiesEntity } from 'copies/entities/copies.entity';
+import { CopiesEntity } from './copies/entities/copies.entity';
 import { LoansModule } from './loans/loans.module';
-import { LoansEntity } from 'loans/entities/loans.entity';
+import { LoansEntity } from './loans/entities/loans.entity';
 import { AuthModule } from './auth/auth.module';
 
 

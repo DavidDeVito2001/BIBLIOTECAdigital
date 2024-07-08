@@ -27,7 +27,7 @@ export class ProfilesService {
         
         // Si el usuario no es encontrado, lanza una excepción con el estado NOT_FOUND
         if (!userFound) {
-            throw new HttpException('User No Existe', HttpStatus.NOT_FOUND);
+            throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND);
         }
 
         // Si el usuario es encontrado pero ya tiene un profileId, lanza una excepción con el estado CONFLICT
@@ -66,12 +66,12 @@ export class ProfilesService {
 
         // Si el usuario no se encuentra se retorna un error
         if (!userFound) {
-            throw new HttpException('User No Existe', HttpStatus.NOT_FOUND);
+            throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND);
         }
 
         // Si el usuario no tiene un perfil asociado se retorna un error
         if (!userFound.profile) {
-            throw new HttpException('Profile No Existe para este usuario', HttpStatus.NOT_FOUND);
+            throw new HttpException('Profile No Encotrado para este usuario', HttpStatus.NOT_FOUND);
         }
 
         // Sino: se le asigna los valores del profile actualizado al perfil encontrado

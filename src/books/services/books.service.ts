@@ -37,7 +37,7 @@ export class BooksService {
 
     //Si el book no fue encontrado se retorna un error: NOT_FOUND
     if (!bookFound) {
-      throw new HttpException('Book No Existe', HttpStatus.NOT_FOUND);
+      throw new HttpException('Book No Encontrado', HttpStatus.NOT_FOUND);
     }
 
     //Sino se retorna el book obetenido
@@ -78,7 +78,7 @@ export class BooksService {
 
       // Si el book no se encuentra, lanza un error
       if (!bookFound) {
-        throw new HttpException('User No Encontrado', HttpStatus.NOT_FOUND);
+        throw new HttpException('Book No Encontrado', HttpStatus.NOT_FOUND);
       }
 
       // Elimina el usuario, el perfil asociado se elimina automáticamente por CASCADE
@@ -86,12 +86,14 @@ export class BooksService {
     } catch (error) {
       // captamos el error y si el elemento no se puede eliminar por tener datos asociados se advierte
       if (error.code === 'ER_ROW_IS_REFERENCED_2') {
-        console.error(
-          'No se puede eliminar el libro. Tiene copias relacionadas.',
+        throw new HttpException(
+          'No se puede eliminar el book porque tiene copies asociadas!',
+          HttpStatus.BAD_REQUEST,
         );
         // Aquí puedes mostrar un mensaje al usuario o realizar otra acción
       } else {
         console.error('Error al eliminar el libro:', error.message);
+        throw error; // Lanzar nuevamente el error para que pueda ser capturado en las pruebas
       }
     }
   }
