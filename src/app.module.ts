@@ -19,11 +19,13 @@ import { LoansEntity } from './loans/entities/loans.entity';
 import { AuthModule } from './auth/auth.module';
 
 
+
 @Module({
   imports: [
     //Configuramos el modulo para cargar las variables de entorno
     ConfigModule.forRoot({
-      envFilePath: `.env.development`,
+      
+      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
       isGlobal: true 
     }),
     //Configuramos la conexión a la BD de forma asíncrono 
@@ -32,11 +34,11 @@ import { AuthModule } from './auth/auth.module';
       useFactory: (configService: ConfigService) =>({
         type: 'mysql', //Especificamos el tipo de BD 
         host: configService.get('BIBLIOTECA_HOST'), //Obtiene el host de bd
-        port: configService.get('BIBLIOTECA_PORT'), //Obtiene el puerto de la bd
+        port: configService.get('BIBLIOTECA_DB_PORT'), //Obtiene el puerto de la bd
         username: configService.get('BIBLIOTECA_USERNAME'), //Obtiene el username para la bd
         password: configService.get('BIBLIOTECA_PASSWORD'), //obtiene la contraseña
         database: configService.get('BIBLIOTECA_DATABASE'), //Obtiene el nombre de la bd
-        entities: [UsersEntity, ProfileEntity, BooksEntity, CopiesEntity, LoansEntity]
+        entities: [UsersEntity, ProfileEntity, BooksEntity, CopiesEntity, LoansEntity],
       }),
       inject:[ConfigService], 
     }),
