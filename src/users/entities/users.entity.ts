@@ -14,7 +14,7 @@
 import { ProfileEntity } from "../../profiles/entities/profiles.entity";
 import { BaseEntity } from "../../config/base.entity";
 import {Exclude } from 'class-transformer'
-import { ROLES } from "../../constants/ROLES";
+import { ROLES } from "../../constants/roles";
 import { IUser } from "../../interfaces/user.interfaces";
 import { Column, Entity, JoinColumn,OneToMany, OneToOne} from "typeorm";
 import { LoansEntity } from "../../loans/entities/loans.entity";

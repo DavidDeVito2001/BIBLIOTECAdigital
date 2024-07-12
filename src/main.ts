@@ -8,6 +8,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  console.log('NODE_ENV:', process.env.NODE_ENV); 
   //Se utiliza morgan con el formato 'dev', para producir registros de las solicitudes HTTP con al información básica
   app.use(morgan('dev'));
 
@@ -33,7 +34,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true })); //sirve para validar los controllers de forma automática
   
   
-  await app.listen(3000);
+  await app.listen(process.env.BIBLIOTECA_PORT);
   console.log('Escuchando en el puerto 3000')
   
 }
