@@ -23,8 +23,8 @@
     "migration:generate": "cross-env NODE_ENV=development npm run typeorm migration:generate ./src/database/migrations/%npm_config_name% -- -d typeorm.config.ts",
     "migration:run-dev": "cross-env NODE_ENV=development npm run typeorm migration:run -- -d typeorm.config.ts",
     "migration:revert-dev": "cross-env NODE_ENV=development npm run typeorm migration:revert -- -d typeorm.config.ts",
-    "migration:gen-prod": "cross-env NODE_ENV=production npm run typeorm migration:generate ./src/database/migrations/%npm_config_name% -- -d typeorm.config.ts",
-    "migration:run-prod": "cross-env NODE_ENV=production npm run typeorm migration:run -- -d typeorm.config.ts"
+    "migration:gen-prod": "cross-env NODE_ENV=production typeorm-ts-node-commonjs migration:generate src/database/migrations/$npm_config_name -d typeorm.config.ts",
+    "migration:run-prod": "cross-env NODE_ENV=production typeorm-ts-node-commonjs migration:run -d typeorm.config.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
